@@ -1,0 +1,34 @@
+﻿@model Xsis_Shop_ViewModels.OrderItemViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <button type="button" class="close" style="color:red" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title" id="OrderItemModalLabel">Add Item for Order No. <strong>@ViewBag.OrderNumber</strong></h3>
+    </div>
+    <div class="modal-body">
+        <form role="form">
+            <div class="form-group fg-float">
+                <div class="fg-line">
+                    <div class="select">
+                        @Html.DropDownList("ProductId", null, "-- Pilih Product --", htmlAttributes: new { @class = "chosen" })
+                    </div>
+                </div>
+                <span class="field-validation-valid text-danger validProductId" data-valmsg-for="ProductId" data-valmsg-replace="true"></span>
+            </div>
+            <br />
+            <div class="form-group fg-float">
+                <div class="fg-line">
+                    @Html.LabelFor(model => model.Quantity, new { @class = "fg-label" })
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control fg-input" } })
+                </div>
+                <span class="field-validation-valid text-danger validQuantity" data-valmsg-for="Quantity" data-valmsg-replace="true"></span>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button id="AddItem" type="button" class="btn btn bgm-teal">Add</button>
+    </div>
+}
+@Scripts.Render("~/Scripts/js/order-item.js")

@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Xsis_Shop_ViewModels.OrderViewModel>
+
+@{
+    ViewBag.Title = "Orders";
+    ViewBag.SelectedOrders = "active toggled";
+    ViewBag.SelectedOrdersList = "active";
+}
+
+<style>
+    .chosen {
+        width: 100%;
+    }
+</style>
+
+<div class="block-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-1">
+                <a href="@Url.Action("Create", ViewBag.Title)" class="btn bgm-teal">Create New Order</a>
+            </div>
+            <div class="col-sm-2"></div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-format-list-numbered"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="No. Order" value="@ViewBag.OrderNumber" name="OrderNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control date-picker" placeholder="Tanggal Order" value="@ViewBag.OrderDate" name="OrderDate"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="fg-line">
+                        <div class="select">
+                            @Html.DropDownList("CustomerId", null, "-- Pilih Customer --", htmlAttributes: new { @class = "chosen", @Value=ViewBag.SelectedCustomer })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <button type="submit" class="btn bgm-teal"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        No.
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CustomerName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalAmount)
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;
+                    foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @(++i)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                            $ @Html.DisplayFor(modelItem => item.TotalAmount)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Details", ViewBag.Title, new { id = item.Id })" class="btn btn-primary btn-icon"><i class="zmdi zmdi-collection-text"></i></a>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Xsis_Shop_ViewModels.SupplierViewModel>
+
+@{
+    ViewBag.Title = "Suppliers";
+    ViewBag.SelectedSuppliers = "active toggled";
+    ViewBag.SelectedSuppliersList = "active";
+}
+
+<div class="block-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <a href="@Url.Action("Create", ViewBag.Title)" class="btn bgm-teal">Create New Supplier</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContactTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fax)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fax)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", ViewBag.Title, new { id = item.Id })" class="btn bgm-bluegray btn-icon"><i class="zmdi zmdi-edit"></i></a>
+                            <a href="@Url.Action("Details", ViewBag.Title, new { id = item.Id })" class="btn btn-primary btn-icon"><i class="zmdi zmdi-collection-text"></i></a>
+                            <a href="@Url.Action("Delete", ViewBag.Title, new { id = item.Id })" class="btn btn-danger btn-icon"><i class="zmdi zmdi-delete"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

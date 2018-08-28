@@ -1,0 +1,102 @@
+﻿@model Xsis_Shop_ViewModels.SupplierViewModel
+
+@{
+    ViewBag.Title = "Suppliers";
+    ViewBag.Subtitle = "Delete";
+    ViewBag.SelectedSuppliers = "active toggled";
+}
+
+<div class="block-header">
+    <h2>@ViewBag.Subtitle Supplier</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header">
+            <h5 class="text-danger">Are you sure you want to delete this?</h5>
+        </div>
+        <div class="card-body card-padding">
+            @Html.HiddenFor(model => model.Id)
+            <div class="pmb-block">
+                <div class="pmbb-body">
+                    <div class="pmbb-view">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.CompanyName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CompanyName)
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.ContactName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.ContactName)
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.ContactTitle)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.ContactTitle)
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.City)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.City)
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.Country)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Country)
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.Phone)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Phone)
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.Fax)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Fax)
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <button type="submit" class="btn btn-danger m-t-10">Delete</button>
+                            </dt>
+
+                            <dd>
+                                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn bgm-bluegray m-t-10" })
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

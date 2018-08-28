@@ -1,0 +1,298 @@
+﻿@{
+    ViewBag.SelectedHome = "active";
+    ViewBag.Title = "Dashboard";
+}
+
+<style>
+    .click-recent-product {
+        cursor: pointer;
+    }
+
+        .click-recent-product:hover {
+            color: #00BCD4;
+        }
+</style>
+
+<div class="block-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="mini-charts">
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-lightgreen">
+                <div class="clearfix">
+                    <a href="@Url.Action("Index", "Customers")">
+                        <div class="chart stats-bar"></div>
+                        <div class="count">
+                            <small>Total Customers</small>
+                            <h2>@ViewBag.TotalCustomers</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-purple">
+                <div class="clearfix">
+                    <a href="@Url.Action("Index", "Suppliers")">
+                        <div class="chart stats-bar-2"></div>
+                        <div class="count">
+                            <small>Total Suppliers</small>
+                            <h2>@ViewBag.TotalSuppliers</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-orange">
+                <div class="clearfix">
+                    <a href="@Url.Action("Index", "Products")">
+                        <div class="chart stats-line"></div>
+                        <div class="count">
+                            <small>Total Products</small>
+                            <h2>@ViewBag.TotalProducts</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix">
+                    <a href="@Url.Action("Index", "Orders")">
+                        <div class="chart stats-line-2"></div>
+                        <div class="count">
+                            <small>Total Orders</small>
+                            <h2>@ViewBag.TotalOrders</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix">
+                    <a href="@Url.Action("Index", "a_Supplier")">
+                        <div class="chart stats-line-2"></div>
+                        <div class="count">
+                            <small>Total Orders</small>
+                            <h2>@ViewBag.Totala_Supplier</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix">
+                    <a href="@Url.Action("Index", "a_Product")">
+                        <div class="chart stats-line-2"></div>
+                        <div class="count">
+                            <small>Total Orders</small>
+                            <h2>@ViewBag.Totala_Product</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix">
+                    <a href="@Url.Action("Index", "a_PurchaseOrder")">
+                        <div class="chart stats-line-2"></div>
+                        <div class="count">
+                            <small>Total Orders</small>
+                            <h2>@ViewBag.Totala_PurchaseOrder</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <!-- Top Customers -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Top @ViewBag.MaxTopCustomer Customers <!--small>Phasellus condimentum ipsum id auctor imperdie</!--small--></h2>
+                <ul class="actions">
+                    <li>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="fg-line" style="width: 45px; margin-right:20px;">
+                                <input maxlength="1" type="text" class="form-control text-center" value="@ViewBag.MaxTopCustomer" name="max_top_customer">
+                            </div>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body m-t-0">
+                <table class="table table-hover table-inner table-vmiddle">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px">Rank.</th>
+                            <th>Nama Customer</th>
+                            <th>Total Belanja</th>
+                            <th class="pull-right">Uang Dibelanjakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 0;
+                            foreach (var item in ViewBag.TopCustomers)
+                            {
+                                <tr onclick="window.location='@Url.Action("Details", "Customers", new { id = item.CustomerId })';" class="click-recent-product">
+                                    <td class="f-500 c-cyan">@(++i)</td>
+                                    <td>@item.CustomerName</td>
+                                    <td>@item.OrderTimes kali</td>
+                                    <td class="f-500 c-cyan pull-right">$ @item.TotalAmount</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <!-- Top Products -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Top @ViewBag.MaxTopProduct Products <!--small>Phasellus condimentum ipsum id auctor imperdie</!--small--></h2>
+                <ul class="actions">
+                    <li>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="fg-line" style="width: 45px; margin-right:20px;">
+                                <input maxlength="1" type="text" class="form-control text-center" value="@ViewBag.MaxTopProduct" name="max_top_product">
+                            </div>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body m-t-0">
+                <table class="table table-hover table-inner table-vmiddle">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px">Rank.</th>
+                            <th>Nama Produk</th>
+                            <th class="pull-right">Produk Terjual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            i = 0;
+                            foreach (var item in ViewBag.TopProducts)
+                            {
+                                <tr onclick="window.location='@Url.Action("Details", "Products", new { id = item.ProductId })';" class="click-recent-product">
+                                    <td class="f-500 c-cyan">@(++i)</td>
+                                    <td>@item.ProductName</td>
+                                    <td class="f-500 c-cyan pull-right">@item.ProductSold items</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <!-- Recent Products -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Recent Products <!--small>Phasellus condimentum ipsum id auctor imperdie</!--small--></h2>
+                <ul class="actions">
+                    <li>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="fg-line" style="width: 45px; margin-right:20px;">
+                                <input maxlength="2" type="text" class="form-control text-center" value="@ViewBag.MaxRecentProduct" name="max_recent_product">
+                            </div>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body m-t-0">
+                <table class="table table-hover table-inner table-vmiddle">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px">No.</th>
+                            <th>Nama Produk</th>
+                            <th style="width: 60px">Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            i = 0;
+                            foreach (var item in ViewBag.RecentProducts)
+                            {
+                                <tr onclick="window.location='@Url.Action("Details", "Products", new { id = item.Id })';" class="click-recent-product">
+                                    <td class="f-500 c-cyan">@(++i)</td>
+                                    <td>@item.ProductName</td>
+                                    <td class="f-500 c-cyan pull-right">$ @item.UnitPrice</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <!-- Recent Orders -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Recent Orders <!--small>Phasellus condimentum ipsum id auctor imperdie</!--small--></h2>
+                <ul class="actions">
+                    <li>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="fg-line" style="width: 45px; margin-right:20px;">
+                                <input maxlength="2" type="text" class="form-control text-center" value="@ViewBag.MaxRecentOrder" name="max_recent_order">
+                            </div>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body m-t-0">
+                <table class="table table-hover table-inner table-vmiddle">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px">No.</th>
+                            <th>Nomor Order</th>
+                            <th>Nama Customer</th>
+                            <th style="width: 100px" class="pull-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            i = 0;
+                            foreach (var item in ViewBag.RecentOrders)
+                            {
+                                <tr onclick="window.location='@Url.Action("Details", "Orders", new { id = item.Id })';" class="click-recent-product">
+                                    <td class="f-500 c-cyan">@(++i)</td>
+                                    <td>@item.OrderNumber</td>
+                                    <td>@item.CustomerName</td>
+                                    <td class="f-500 c-cyan pull-right" style="width: 100px">$ @item.TotalAmount</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

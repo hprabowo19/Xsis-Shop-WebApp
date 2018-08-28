@@ -1,0 +1,119 @@
+﻿@model Xsis_Shop_ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "Orders";
+    ViewBag.Subtitle = "Create";
+    ViewBag.SelectedOrders = "active toggled";
+    ViewBag.SelectedOrdersCreate = "active";
+}
+
+<style>
+    #OrderNumber, #TotalAmount {
+        font-weight: bold;
+    }
+
+    .myModalContent {
+        color: dimgray;
+    }
+
+    .tbody > tr > td:nth-child(n) {
+        vertical-align: middle;
+    }
+</style>
+
+<div class="block-header">
+    <h2>@ViewBag.Subtitle Order</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body card-padding">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <form role="form">
+                <br />
+                <div class="form-group fg-float">
+                    <div class="fg-line">
+                        @Html.LabelFor(model => model.OrderNumber, new { @class = "fg-label" })
+                        @Html.EditorFor(model => model.OrderNumber, new { htmlAttributes = new { @class = "form-control fg-input", @Value = ViewBag.OrderNumber, @readonly = "readonly" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.OrderNumber, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="form-group fg-float">
+                    <div class="fg-line">
+                        @Html.LabelFor(model => model.OrderDate, new { @class = "fg-label" })
+                        @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group fg-float">
+                    <div class="fg-line">
+                        <div class="select">
+                            @Html.DropDownList("CustomerId", null, "-- Pilih Customer --", htmlAttributes: new { @class = "chosen" })
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                </div>
+                <div class="table-responsive">
+                    <table id="table-order-item" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="50px">
+                                    <a id="CreateOrderItem" class="btn bgm-blue m-t-10"><i class="zmdi zmdi-plus"></i></a>
+                                </th>
+                                <th>
+                                    No.
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OrderItem.First().ProductName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OrderItem.First().UnitPrice)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OrderItem.First().Quantity)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OrderItem.First().Price)
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody"></tbody>
+                    </table>
+                    <br />
+                    <br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            @Html.LabelFor(model => model.TotalAmount, new { @class = "fg-label" })
+                            @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control fg-input", @readonly = "readonly" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <button type="submit" class="btn bgm-teal m-t-10">Create</button>
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "pull-right btn bgm-bluegray m-t-10" })
+            </form>
+        </div>
+    </div>
+}
+<div class="modal fade" id="OrderItemModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="OrderItemModalContent"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+            GetListOrderItem();
+            setDateTime();
+        }
+    </script>    
+}

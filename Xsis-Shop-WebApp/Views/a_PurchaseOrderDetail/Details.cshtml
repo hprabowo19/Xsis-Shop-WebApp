@@ -1,0 +1,125 @@
+﻿@model Xsis_Shop_ViewModels.a_PurchaseOrderDetailViewModel
+@{
+    ViewBag.Title = "a_PurchaseOrder";
+    ViewBag.Subtitle = "Details";
+    ViewBag.Selecteda_PurchaseOrderDetail = "active toggled";
+}
+<style>
+
+    .total-amount {
+        font-weight: bold;
+    }
+</style>
+<div class="block-header">
+    <h2>@ViewBag.Subtitle a_PurchaseOrderDetail</h2>
+</div>
+<div class="card">
+    <div class="card-body card-padding">
+        <div class="pmb-block">
+            <div class="pmbb-body">
+                <div class="pmbb-view">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Code)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Code)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Quantity)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Quantity)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UnitPrice)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UnitPrice)
+                        </dd>
+                    </dl>
+                    @*<dl class="dl-horizontal">
+                            <dt>
+                                Tabel Produk
+                            </dt>
+                            <dd>
+                            </dd>
+                        </dl>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            No.
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.OrderItem.SingleOrDefault().ProductName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.OrderItem.SingleOrDefault().UnitPrice)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.OrderItem.SingleOrDefault().Quantity)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.OrderItem.SingleOrDefault().Price)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{int i = 0;
+                                        foreach (var item in Model.OrderItem)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @(++i)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                                </td>
+                                                <td>
+                                                    $ @Html.DisplayFor(modelItem => item.UnitPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                                </td>
+                                                <td>
+                                                    $ @Html.DisplayFor(modelItem => item.Price)
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    <tr class="total-amount">
+                                        <td colspan="4">
+                                            @(Html.DisplayNameFor(model => model.TotalAmount).ToString().ToUpper())
+                                        </td>
+                                        <td>
+                                            $ @Html.DisplayFor(model => model.TotalAmount)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @*</div>*@
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn bgm-bluegray m-t-10" })
+                        </dt>
+                        <dd></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

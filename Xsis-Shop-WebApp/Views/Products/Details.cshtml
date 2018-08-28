@@ -1,0 +1,77 @@
+﻿@model Xsis_Shop_ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Products";
+    ViewBag.Subtitle = "Details";
+    ViewBag.SelectedProducts = "active toggled";
+}
+
+
+<div class="block-header">
+    <h2>@ViewBag.Subtitle Product</h2>
+</div>
+
+<div class="card">
+    <div class="card-body card-padding">
+        <div class="pmb-block">
+            <div class="pmbb-body">
+                <div class="pmbb-view">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ProductName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ProductName)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UnitPrice)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.UnitPrice)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Package)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Package)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.IsDiscontinued)
+                        </dt>
+
+                        <dd class="@(Model.IsDiscontinued ? "text-danger" : "text-success")">
+                            @(Model.IsDiscontinued ? "Dihentikan" : "Berlanjut")
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.SupplierName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.SupplierName)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn bgm-teal m-t-10" })
+                        </dt>
+
+                        <dd>
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "pull-right btn bgm-bluegray m-t-10" })
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

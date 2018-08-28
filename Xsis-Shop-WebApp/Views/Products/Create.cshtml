@@ -1,0 +1,106 @@
+﻿@model Xsis_Shop_ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Products";
+    ViewBag.Subtitle = "Create";
+    ViewBag.SelectedProducts = "active toggled";
+    ViewBag.SelectedProductsCreate = "active";
+}
+
+<style type="text/css">
+    .slider [type="checkbox"] {
+        display: none;
+    }
+
+    .slider .toggle-label {
+        display: block;
+        width: 40px;
+        height: 20px;
+        position: relative;
+        background: #9E9E9E;
+        border-radius: 10px;
+        transition: background 0.2s ease;
+        cursor: pointer;
+    }
+        .slider .toggle-label::before {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 100%;
+            background: #ededed;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #ededed;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: transform 0.2s ease-in-out;
+        }
+    .slider [type="checkbox"]:checked ~ .toggle-label {
+        background: #ff8a82;
+    }
+        .slider [type="checkbox"]:checked ~ .toggle-label::before {
+            -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+            background: #ff5649;
+            box-shadow: 0 0 0 2px #ff5649;
+        }
+</style>
+
+<div class="block-header">
+    <h2>@ViewBag.Subtitle Product</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="card">
+    <div class="card-body card-padding">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form role="form">
+            <div class="form-group fg-float">
+                <div class="fg-line">
+                    @Html.LabelFor(model => model.ProductName, new { @class = "fg-label" })
+                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control fg-input" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group fg-float">
+                <div class="fg-line">
+                    <div class="select">
+                        @Html.DropDownList("SupplierId", null, "-- Pilih Supplier --", htmlAttributes: new { @class = "chosen" })
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group fg-float">
+                <div class="fg-line">
+                    @Html.LabelFor(model => model.UnitPrice, new { @class = "fg-label" })
+                    @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control fg-input" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group fg-float">
+                <div class="fg-line">
+                    @Html.LabelFor(model => model.Package, new { @class = "fg-label" })
+                    @Html.EditorFor(model => model.Package, new { htmlAttributes = new { @class = "form-control fg-input" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.Package, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group fg-float">
+                <div class="fg-line">
+                    <div class="slider">
+                        @Html.CheckBoxFor(model => model.IsDiscontinued, new { @class = "toggle-pill" })
+                        <label class="toggle-label pull-right" for="IsDiscontinued"></label>
+                        @Html.LabelFor(model => model.IsDiscontinued, new { @class = "fg-label" })
+                    </div>
+                </div>
+            </div>
+                <button type="submit" class="btn bgm-teal m-t-10">Create</button>
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "pull-right btn bgm-bluegray m-t-10" })
+        </form>
+    </div>
+</div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

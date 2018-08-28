@@ -1,0 +1,20 @@
+﻿<style>
+    .profile {
+        color: gray;
+    }
+    .profile:hover {
+        color: dimgray;
+    }
+</style>
+
+
+<footer id="footer">
+    Copyright &copy; @DateTime.Now.Year - <a href="@Url.Action("About", "Home")" class="profile"><strong>Fathurahman Ma'ruf</strong></a>
+    <ul class="f-menu">
+        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+        <li><a href="@Url.Action("Index", "Customers")">Customers</a></li>
+        <li><a href="@Url.Action("Index", "Suppliers")">Suppliers</a></li>
+        <li><a href="@Url.Action("Index", "Products")">Products</a></li>
+        <li><a href="@Url.Action("Index", "Orders")">Orders</a></li>
+    </ul>
+</footer>

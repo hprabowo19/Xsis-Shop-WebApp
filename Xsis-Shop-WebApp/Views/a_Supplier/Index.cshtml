@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Xsis_Shop_ViewModels.a_SupplierViewModel>
+
+@{
+    ViewBag.Title = "a_Supplier";
+    ViewBag.Selecteda_Supplier = "active toggled";
+    ViewBag.Selecteda_SupplierList = "active";
+}
+
+<div class="block-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-1">
+                <a href="@Url.Action("Create", ViewBag.Title)" class="btn bgm-teal">Create New a_Supplier</a>
+            </div>
+            <div class="col-sm-2"></div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="The Name" value="@ViewBag.name" name="Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="The City" value="@ViewBag.city" name="City">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <button type="submit" class="btn bgm-teal"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Code)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", ViewBag.Title, new { id = item.ID })" class="btn bgm-bluegray btn-icon"><i class="zmdi zmdi-edit"></i></a>
+                            <a href="@Url.Action("Details", ViewBag.Title, new { id = item.ID })" class="btn btn-primary btn-icon"><i class="zmdi zmdi-collection-text"></i></a>
+                            <a href="@Url.Action("Delete", ViewBag.Title, new { id = item.ID })" class="btn btn-danger btn-icon"><i class="zmdi zmdi-delete"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

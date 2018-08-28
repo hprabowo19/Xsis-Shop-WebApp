@@ -1,0 +1,225 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using Xsis_Shop_Repository;
+using Xsis_Shop_ViewModels;
+using System.Web.Configuration;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+
+namespace Xsis_Shop_WebApp.Controllers
+{
+    public class ProductsController : Controller
+    {
+        private string API_URL = WebConfigurationManager.AppSettings["Xsis_Shop_WebAPI"];
+        private ProductRepository service = new ProductRepository();
+
+        // GET: Products
+        public ActionResult Index()
+        {
+            string API_END_POINT = API_URL + "api/ProductAPI/";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(API_END_POINT).Result;
+
+            string result = response.Content.ReadAsStringAsync().Result.ToString();
+            var ListProduct = JsonConvert.DeserializeObject<List<ProductViewModel>>(result);
+            return View(ListProduct.ToList());
+        }
+
+        // GET: Products/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            string API_END_POINT = API_URL + "api/ProductAPI/Get/" + (id ?? 0);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(API_END_POINT).Result;
+
+            string result = response.Content.ReadAsStringAsync().Result.ToString();
+            ProductViewModel Model = JsonConvert.DeserializeObject<ProductViewModel>(result);
+            if (Model == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(Model);
+        }
+
+        // GET: Products/Create
+        public ActionResult Create()
+        {
+            string API_END_POINT = API_URL + "api/ProductAPI/GetSupplierList/" + ("get");
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(API_END_POINT).Result;
+
+            string result = response.Content.ReadAsStringAsync().Result.ToString();
+            var ListSupplier = JsonConvert.DeserializeObject<List<SupplierViewModel>>(result);
+
+            ViewBag.SupplierId = new SelectList(ListSupplier, "Id", "CompanyName");
+            return View();
+        }
+
+        // POST: Products/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ProductViewModel product)
+        {
+            string API_END_POINT, result;
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+
+            if (ModelState.IsValid)
+            {
+                string productJSON = JsonConvert.SerializeObject(product);
+                var buffer = Encoding.UTF8.GetBytes(productJSON);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                API_END_POINT = API_URL + "api/ProductAPI/";
+
+                response = client.PostAsync(API_END_POINT, byteContent).Result;
+
+                result = response.Content.ReadAsStringAsync().Result.ToString();
+                bool success = bool.Parse(result);
+
+                if (success)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Something was happened.");
+                    return View(product);
+                }
+            }
+            API_END_POINT = API_URL + "api/ProductAPI/GetSupplierList/" + ("get");
+            response = client.GetAsync(API_END_POINT).Result;
+
+            result = response.Content.ReadAsStringAsync().Result.ToString();
+            var ListSupplier = JsonConvert.DeserializeObject<List<SupplierViewModel>>(result);
+
+            ViewBag.SupplierId = new SelectList(ListSupplier, "Id", "CompanyName", product.SupplierId);
+            return View(product);
+        }
+
+        // GET: Products/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            string API_END_POINT = API_URL + "api/ProductAPI/Get/" + (id ?? 0);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(API_END_POINT).Result;
+
+            string result = response.Content.ReadAsStringAsync().Result.ToString();
+            ProductViewModel Model = JsonConvert.DeserializeObject<ProductViewModel>(result);
+            if (Model == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.SupplierId = new SelectList(service.GetSupplierList(), "Id", "CompanyName", Model.SupplierId);
+            return View(Model);
+        }
+
+        // POST: Products/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ProductViewModel product)
+        {
+            string API_END_POINT, result;
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+            if (ModelState.IsValid)
+            {
+                string productJSON = JsonConvert.SerializeObject(product);
+                var buffer = Encoding.UTF8.GetBytes(productJSON);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                API_END_POINT = API_URL + "api/ProductAPI/";
+
+                response = client.PutAsync(API_END_POINT, byteContent).Result;
+
+                result = response.Content.ReadAsStringAsync().Result.ToString();
+                bool success = bool.Parse(result);
+
+                if (success)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Something was happened.");
+                    return View(product);
+                }
+            }
+            API_END_POINT = API_URL + "api/ProductAPI/GetSupplierList/" + ("get");
+            response = client.GetAsync(API_END_POINT).Result;
+
+            result = response.Content.ReadAsStringAsync().Result.ToString();
+            var ListSupplier = JsonConvert.DeserializeObject<List<SupplierViewModel>>(result);
+
+            ViewBag.SupplierId = new SelectList(ListSupplier, "Id", "CompanyName", product.SupplierId);
+            return View(product);
+        }
+
+        // GET: Products/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            string API_END_POINT = API_URL + "api/ProductAPI/Get/" + (id ?? 0);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(API_END_POINT).Result;
+
+            string result = response.Content.ReadAsStringAsync().Result.ToString();
+            ProductViewModel Model = JsonConvert.DeserializeObject<ProductViewModel>(result);
+            if (Model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Model);
+        }
+
+        // POST: Products/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            string API_END_POINT = API_URL + "api/ProductAPI/" + (id);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.DeleteAsync(API_END_POINT).Result;
+
+            string result = response.Content.ReadAsStringAsync().Result.ToString();
+            bool success = bool.Parse(result);
+
+            if (success)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Something was happened.");
+                return HttpNotFound();
+            }
+        }
+    }
+}

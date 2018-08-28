@@ -1,0 +1,129 @@
+﻿@model Xsis_Shop_ViewModels.SupplierViewModel
+
+@{
+    ViewBag.Title = "Suppliers";
+    ViewBag.Subtitle = "Details";
+    ViewBag.SelectedSuppliers = "active toggled";
+}
+
+<div class="card">
+    <div class="card-body card-padding">
+        <div class="pmb-block">
+            <div class="pmbb-body">
+                <div class="pmbb-view">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.CompanyName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CompanyName)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.ContactName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ContactName)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.ContactTitle)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ContactTitle)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.City)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.City)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.Country)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Country)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.Phone)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Phone)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.Fax)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Fax)
+                        </dd>
+                    </dl>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Nama Produk
+                                    </th>
+                                    <th>
+                                        Harga Satuan
+                                    </th>
+                                    <th>
+                                        Paket Produk
+                                    </th>
+                                    <th>
+                                        Produksi Dihentikan?
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Products)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnitPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Package)
+                                        </td>
+                                        <td>
+                                            <p class="@(item.IsDiscontinued ? "text-danger" : "text-success")">@(item.IsDiscontinued ? "Dihentikan" : "Berlanjut")</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn bgm-teal m-t-10" })
+                        </dt>
+
+                        <dd>
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "pull-right btn bgm-bluegray m-t-10" })
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

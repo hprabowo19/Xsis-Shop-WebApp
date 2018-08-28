@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Xsis_Shop_ViewModels.ProductViewModel>
+
+@{
+    ViewBag.Title = "Products";
+    ViewBag.SelectedProducts = "active toggled";
+    ViewBag.SelectedProductsList = "active";
+}
+
+<div class="block-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <a href="@Url.Action("Create", ViewBag.Title)" class="btn bgm-teal">Create New Product</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Package)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsDiscontinued)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SupplierName)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Package)
+                        </td>
+                        <td>
+                            <p class="@(item.IsDiscontinued ? "text-danger" : "text-success")">@(item.IsDiscontinued ? "Dihentikan" : "Berlanjut")</p>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SupplierName)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", ViewBag.Title, new { id = item.Id })" class="btn bgm-bluegray btn-icon"><i class="zmdi zmdi-edit"></i></a>
+                            <a href="@Url.Action("Details", ViewBag.Title, new { id = item.Id })" class="btn btn-primary btn-icon"><i class="zmdi zmdi-collection-text"></i></a>
+                            <a href="@Url.Action("Delete", ViewBag.Title, new { id = item.Id })" class="btn btn-danger btn-icon"><i class="zmdi zmdi-delete"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

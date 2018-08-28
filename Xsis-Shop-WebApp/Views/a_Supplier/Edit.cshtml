@@ -1,0 +1,47 @@
+﻿@model Xsis_Shop_ViewModels.a_SupplierViewModel
+@{
+    ViewBag.Title = "a_Supplier";
+    ViewBag.Subtitle = "Edit";
+    ViewBag.Selecteda_Supplier = "active toggled";
+}
+<div class="block-header">
+    <h2>@ViewBag.Subtitle a_Supplier</h2>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body card-padding">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+            <form role="form">
+                <div class="form-group fg-float">
+                    <div class="fg-line">
+                        @Html.LabelFor(model => model.Code, new { @class = "fg-label" })
+                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control fg-input" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group fg-float">
+                    <div class="fg-line">
+                        @Html.LabelFor(model => model.Name, new { @class = "fg-label" })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control fg-input" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group fg-float">
+                    <div class="fg-line">
+                        @Html.LabelFor(model => model.City, new { @class = "fg-label" })
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control fg-input" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+                <button type="submit" class="btn bgm-teal m-t-10">Save</button>
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "pull-right btn bgm-bluegray m-t-10" })
+            </form>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

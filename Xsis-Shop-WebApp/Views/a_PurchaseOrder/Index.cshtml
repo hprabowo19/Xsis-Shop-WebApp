@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Xsis_Shop_ViewModels.a_PurchaseOrderViewModel>
+@{
+    ViewBag.Title = "a_PurchaseOrder";
+    ViewBag.Selecteda_PurchaseOrder = "active toggled";
+    ViewBag.Selecteda_PurchaseOrderList = "active";
+}
+<style>
+
+    .chosen {
+        width: 100%;
+    }
+</style>
+<div class="block-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-1">
+                <a href="@Url.Action("Create", ViewBag.Title)" class="btn bgm-teal">Create New a_PurchaseOrder</a>
+            </div>
+            <div class="col-sm-2"></div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-format-list-numbered"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="No. Code" value="@ViewBag.Code" name="Code">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control date-picker" placeholder="Tanggal Beli" value="@ViewBag.PurchaseDate" name="PurchaseDate" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="fg-line">
+                        <div class="select">
+                            @Html.DropDownList("SupplierID", null, "-- Pilih Supplier --", htmlAttributes: new { @class = "chosen", @Value = ViewBag.Selecteda_Supplier })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <button type="submit" class="btn bgm-teal"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        No.
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Code)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PurchaseDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Remarks)
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(++i)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PurchaseDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                $ @Html.DisplayFor(modelItem => item.Remarks)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Details", ViewBag.Title, new { id = item.ID })" class="btn btn-primary btn-icon"><i class="zmdi zmdi-collection-text"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

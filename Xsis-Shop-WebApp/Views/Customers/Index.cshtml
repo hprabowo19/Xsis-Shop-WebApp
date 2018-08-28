@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Xsis_Shop_ViewModels.CustomerViewModel>
+
+@{
+    ViewBag.Title = "Customers";
+    ViewBag.SelectedCustomers = "active toggled";
+    ViewBag.SelectedCustomersList = "active";
+}
+
+<div class="block-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-1">
+                <a href="@Url.Action("Create", ViewBag.Title)" class="btn bgm-teal">Create New Customer</a>
+            </div>
+            <div class="col-sm-2"></div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-sm-3">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="Full Name" value="@ViewBag.fullname" name="FullName">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="City/Country" value="@ViewBag.place" name="Place">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="Email" value="@ViewBag.email" name="Email">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <button type="submit" class="btn bgm-teal"><i class="zmdi zmdi-search"></i></button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", ViewBag.Title, new { id = item.Id })" class="btn bgm-bluegray btn-icon"><i class="zmdi zmdi-edit"></i></a>
+                            <a href="@Url.Action("Details", ViewBag.Title, new { id = item.Id })" class="btn btn-primary btn-icon"><i class="zmdi zmdi-collection-text"></i></a>
+                            <a href="@Url.Action("Delete", ViewBag.Title, new { id = item.Id })" class="btn btn-danger btn-icon"><i class="zmdi zmdi-delete"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
